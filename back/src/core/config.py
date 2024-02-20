@@ -11,10 +11,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict, PydanticBaseSett
 
 
 class SQLAlchemySettings(BaseSettings):
-    # USER: str
-    # PASSWORD: str
-    # ROOT_PASSWORD: str
-    # HOST: str
     database: str = Field(alias="DATABASE")
 
     sqlalchemy_pool_size: int = Field(alias="POOL_SIZE")

@@ -1,14 +1,8 @@
-from typing import Generator
-
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker
 
-from .config import settings, sqlalchemy_settings
-
-# print(sqlalchemy_settings.SQLALCHEMY_DATABASE_URL)
-print(settings)
-print(sqlalchemy_settings)
+from .config import sqlalchemy_settings
 
 engine = create_engine(
     sqlalchemy_settings.sqlalchemy_database_url.format(

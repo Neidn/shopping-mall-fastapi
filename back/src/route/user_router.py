@@ -2,7 +2,7 @@
 users endpoint
 """
 from fastapi import status
-from fastapi.param_functions import Depends, Security
+from fastapi.param_functions import Depends
 from fastapi.routing import APIRouter
 from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session

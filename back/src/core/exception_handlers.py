@@ -12,7 +12,6 @@ from pydantic import ValidationError
 
 from starlette.requests import Request
 from starlette.types import ExceptionHandler
-from starlette.responses import JSONResponse
 
 validation_error_response_definition["properties"] = {
     "errors": {
