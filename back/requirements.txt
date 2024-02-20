@@ -1,0 +1,24 @@
+# Testing dependencies
+pynose
+pinocchio
+factory-boy
+
+# Code Coverage
+coverage
+
+# For the API
+fastapi
+pydantic
+pydantic-settings
+uvicorn
+
+sqlalchemy
+starlette
+uuid
+passlib
+bcrypt
+python-multipart
+cryptography
+
+# For token
+PyJWT
