@@ -40,12 +40,7 @@ async def add_user(
             plain_password=user_create_request.plain_password,
             db=db,
         )
-        user_created_response: UserCreatedResponse = UserCreatedResponse(
-            username=new_user.username,
-            email=new_user.email,
-            full_name=new_user.full_name,
-            created_at=new_user.created_at,
-        )
+        user_created_response: UserCreatedResponse = UserCreatedResponse.from_orm(new_user)
         return user_created_response
     except ValueError as err:
         raise HTTPException(

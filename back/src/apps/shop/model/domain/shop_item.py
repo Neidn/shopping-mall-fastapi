@@ -20,8 +20,7 @@ class ShopItem(BaseModel):
     updated_at: datetime.datetime
 
     class Config:
-        from_attribute = True
-        orm_mode = True
+        from_attributes = True
 
 
 class ShopItemDB(Base):
@@ -79,3 +78,6 @@ class ShopItemDB(Base):
         index=True,
         comment="Updated time",
     )
+
+    class Config:
+        from_attributes = True

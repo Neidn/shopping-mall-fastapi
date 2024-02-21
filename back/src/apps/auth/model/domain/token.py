@@ -15,4 +15,4 @@ class TokenData(BaseModel):
     expire_at: int
 
     class Config:
-        from_attribute = True
+        from_attributes = True

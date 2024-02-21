@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Type
 from sqlalchemy.orm import Session
 from datetime import datetime
 
@@ -11,9 +11,9 @@ def get_all(
         db: Session,
         owner_id: str
 ) -> List[ShopItem]:
-    shop_items = db.query(ShopItemDB).filter_by(owner_id=owner_id).all()
+    shop_items_db: List[Type[ShopItemDB]] = db.query(ShopItemDB).filter_by(owner_id=owner_id).all()
 
-    shop_items = [ShopItem.from_orm(shop_item) for shop_item in shop_items]
+    shop_items: List[ShopItem] = [ShopItem.from_orm(shop_item) for shop_item in shop_items_db]
     return shop_items
 
 
@@ -28,7 +28,6 @@ def create_one(
         description=shop_item.description,
         price=shop_item.price,
         owner_id=owner_id,
-        disabled=shop_item.disabled,
         created_at=datetime.now(),
         updated_at=datetime.now(),
     )
@@ -36,13 +35,4 @@ def create_one(
     db.add(new_shop_item)
     db.commit()
     db.refresh(new_shop_item)
-    return ShopItem(
-        id=new_shop_item.id,
-        name=new_shop_item.name,
-        description=new_shop_item.description,
-        price=new_shop_item.price,
-        owner_id=new_shop_item.owner_id,
-        disabled=new_shop_item.disabled,
-        created_at=new_shop_item.created_at,
-        updated_at=new_shop_item.updated_at,
-    )
+    return ShopItem.from_orm(new_shop_item)

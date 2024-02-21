@@ -30,6 +30,9 @@ class ShopItemCreateRequest(BaseModel):
             )
         return v
 
+    class Config:
+        from_attributes = True
+
 
 class ShopItemResponse(BaseModel):
     """ Shop Item Response """
@@ -41,4 +44,4 @@ class ShopItemResponse(BaseModel):
     disabled: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True

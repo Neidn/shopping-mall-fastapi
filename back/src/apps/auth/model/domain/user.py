@@ -16,13 +16,13 @@ class User(BaseModel):
     full_name: str
     hashed_password: str
     disabled: bool = False
-    permission: UserPermission = UserPermission.NORMAL
+    permission: int = UserPermission.NORMAL
     created_at: str
     updated_at: str
-    scopes: Optional[list[str]] = None
+    scopes: list[str] = []
 
     class Config:
-        from_attribute = True
+        from_attributes = True
 
 
 class UserDB(Base):

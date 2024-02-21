@@ -47,14 +47,7 @@ async def get_shop_items(
         db=db,
         owner_id=current_user.id,
     )
-    response = [ShopItemResponse(
-        id=shop_item.id,
-        name=shop_item.name,
-        description=shop_item.description,
-        price=shop_item.price,
-        created_at=shop_item.created_at,
-        updated_at=shop_item.updated_at,
-    ) for shop_item in shop_items]
+    response = [ShopItemResponse.from_orm(shop_item) for shop_item in shop_items]
     return response
 
 
@@ -77,11 +70,4 @@ async def create_shop_item(
         owner_id=current_user.id,
     )
 
-    return ShopItemResponse(
-        id=shop_item.id,
-        name=shop_item.name,
-        description=shop_item.description,
-        price=shop_item.price,
-        created_at=shop_item.created_at,
-        updated_at=shop_item.updated_at,
-    )
+    return ShopItemResponse.from_orm(shop_item)

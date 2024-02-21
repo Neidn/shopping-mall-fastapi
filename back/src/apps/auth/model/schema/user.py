@@ -46,6 +46,9 @@ class UserCreateRequest(BaseModel):
             )
         return v
 
+    class Config:
+        from_attributes = True
+
 
 class UserCreatedResponse(BaseModel):
     """ User Created Response """
@@ -54,6 +57,9 @@ class UserCreatedResponse(BaseModel):
     full_name: str
     created_at: str
 
+    class Config:
+        from_attributes = True
+
 
 class UserSignInResponse(BaseModel):
     username: str
@@ -61,3 +67,6 @@ class UserSignInResponse(BaseModel):
     full_name: str
     access_token: str
     token_type: TokenType
+
+    class Config:
+        from_attributes = True

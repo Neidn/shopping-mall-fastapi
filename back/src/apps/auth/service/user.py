@@ -1,5 +1,5 @@
 import time
-from typing import Iterable, List, Optional
+from typing import Iterable, List, Optional, Type
 from datetime import datetime
 
 # import jwt
@@ -31,27 +31,38 @@ async def create_user(
     if not hashed_password:
         raise ValueError("Password is required")
 
-    new_user = User(
+    new_user: User = User(
         id=get_new_id(),
         username=username,
         email=email,
         full_name=full_name,
         hashed_password=hashed_password,
+        permission=UserPermission.NORMAL,
         scopes=user_permission_to_scopes(UserPermission.NORMAL),
         created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         updated_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     )
 
     # check if user exists
-    user = db.query(UserDB).filter_by(email=email).first()
+    user: Optional[UserDB] = db.query(UserDB).filter_by(email=email).first()
     if user:
         raise ValueError("User already exists")
 
-    new_user_db = UserDB(**new_user.dict())
-    new_user_db.scopes = SPLITER.join(new_user.scopes)
-    db.add(new_user_db)
+    user = UserDB(
+        id=new_user.id,
+        username=new_user.username,
+        email=new_user.email,
+        full_name=new_user.full_name,
+        hashed_password=new_user.hashed_password,
+        disabled=new_user.disabled,
+        permission=new_user.permission,
+        scopes=SPLITER.join(new_user.scopes),
+        created_at=new_user.created_at,
+        updated_at=new_user.updated_at,
+    )
+    db.add(user)
     db.commit()
-    db.refresh(new_user_db)
+    db.refresh(user)
 
     return new_user
 
