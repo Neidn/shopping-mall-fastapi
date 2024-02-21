@@ -19,6 +19,7 @@ class User(BaseModel):
     permission: UserPermission = UserPermission.NORMAL
     created_at: str
     updated_at: str
+    scopes: Optional[list[str]] = None
 
     class Config:
         from_attribute = True
@@ -78,6 +79,13 @@ class UserDB(Base):
         default=UserPermission.NORMAL,
         server_default="",
         comment="User permission(GUEST: 0, NORMAL: 1, ADMIN: 2)",
+    )
+    scopes = Column(
+        String,
+        index=True,
+        default="",
+        server_default="",
+        comment="User scopes",
     )
     created_at = Column(
         String,

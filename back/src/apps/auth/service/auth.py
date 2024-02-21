@@ -14,6 +14,9 @@ from . import verify_password
 from .user import get_user
 from .token import create_access_token
 
+from ..constants import SupportScopes
+from .. import user_permission_to_scopes
+
 
 async def authenticate_user(
         db: Session,
@@ -30,5 +33,7 @@ async def authenticate_user(
 
     if not verify_password(password, user.hashed_password):
         raise ValueError("Invalid password")
+
+    user.scopes = user_permission_to_scopes(user.permission)
 
     return user

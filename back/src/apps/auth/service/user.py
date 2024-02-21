@@ -1,6 +1,5 @@
 import time
 from typing import Iterable, List, Optional
-from uuid import uuid4
 from datetime import datetime
 
 # import jwt
@@ -11,14 +10,12 @@ from sqlalchemy.orm import Session
 
 from ....core.database import get_database_session
 from ..model.domain.user import User, UserDB
-from ..constants import UserPermission, SupportScopes, Oauth2Scheme
+from ..constants import UserPermission, SupportScopes, Oauth2Scheme, SPLITER
+from .. import user_permission_to_scopes
 from ..exceptions import token_credential_exception, InactiveUserException, ForbiddenException
 from .token import decode_token
 from . import is_enough_permissions, check_admin_user, create_hashed_password
-
-
-def get_new_id() -> str:
-    return str(uuid4())
+from .... import get_new_id
 
 
 async def create_user(
@@ -40,6 +37,7 @@ async def create_user(
         email=email,
         full_name=full_name,
         hashed_password=hashed_password,
+        scopes=user_permission_to_scopes(UserPermission.NORMAL),
         created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         updated_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     )
@@ -50,6 +48,7 @@ async def create_user(
         raise ValueError("User already exists")
 
     new_user_db = UserDB(**new_user.dict())
+    new_user_db.scopes = SPLITER.join(new_user.scopes)
     db.add(new_user_db)
     db.commit()
     db.refresh(new_user_db)
@@ -93,6 +92,7 @@ async def get_current_user(
         full_name=user.full_name,
         hashed_password=user.hashed_password,
         disabled=user.disabled,
+        scopes=user.scopes.split(SPLITER),
         created_at=user.created_at,
         updated_at=user.updated_at,
     )
@@ -136,6 +136,7 @@ async def get_user(
         full_name=user.full_name,
         hashed_password=user.hashed_password,
         disabled=user.disabled,
+        scopes=user.scopes.split(SPLITER),
         created_at=user.created_at,
         updated_at=user.updated_at,
     )

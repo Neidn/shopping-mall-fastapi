@@ -78,7 +78,7 @@ async def sign_in(
 
         token, token_type = await create_access_token(
             user_id=user.id,
-            scopes=form_data.scopes,
+            scopes=user.scopes,
         )
 
         if not token:
