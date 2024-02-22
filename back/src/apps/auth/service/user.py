@@ -72,8 +72,6 @@ async def get_current_user(
         token: Annotated[str, Depends(Oauth2Scheme)],
         db: Session = Depends(get_database_session),
 ) -> User:
-    print('security_scopes', security_scopes.scopes)
-
     if security_scopes.scopes is None:
         raise ValueError("Security Scopes is required")
 
@@ -81,9 +79,6 @@ async def get_current_user(
     credentials_exception = token_credential_exception(security_scopes.scope_str)
 
     token = await decode_token(token)
-
-    print('token', token)
-    print('token scopes', token.scopes)
 
     if token is None:
         raise credentials_exception

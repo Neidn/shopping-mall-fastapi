@@ -6,7 +6,6 @@ VENV_BIN = $(VENV_DIR)/bin
 VENV_PYTHON = $(VENV_BIN)/python
 NOSETESTS   = $(VENV_BIN)/nosetests
 
-
 run_back:
 	@echo "Running the backend server"
 	cd $(BACKEND_DIR) && \

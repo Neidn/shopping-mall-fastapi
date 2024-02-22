@@ -40,6 +40,9 @@ class Settings(BaseSettings):
     public_key: str = Field(alias="PUBLIC_KEY")
     cors_allows: List[HttpUrl] = []
 
+    shop_item_default_limit: int = Field(alias="SHOP_ITEM_DEFAULT_LIMIT")
+    shop_item_default_page: int = Field(alias="SHOP_ITEM_DEFAULT_PAGE")
+
     model_config = SettingsConfigDict(
         env_file=os.path.join(os.getcwd(), "..", ".env"),
         extra="ignore",

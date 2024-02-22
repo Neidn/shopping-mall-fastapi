@@ -78,6 +78,3 @@ class ShopItemDB(Base):
         index=True,
         comment="Updated time",
     )
-
-    class Config:
-        from_attributes = True

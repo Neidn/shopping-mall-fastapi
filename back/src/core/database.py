@@ -5,9 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from .config import sqlalchemy_settings
 
 engine = create_engine(
-    sqlalchemy_settings.sqlalchemy_database_url.format(
-        DATABASE=sqlalchemy_settings.database,
-    ),
+    sqlalchemy_settings.sqlalchemy_database_url,
     pool_size=sqlalchemy_settings.sqlalchemy_pool_size,
     pool_recycle=sqlalchemy_settings.sqlalchemy_pool_recycle,
     pool_timeout=sqlalchemy_settings.sqlalchemy_pool_timeout,
